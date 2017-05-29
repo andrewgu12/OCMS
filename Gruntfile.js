@@ -2,6 +2,17 @@ module.exports = function(grunt) {
   "use strict";
 
   grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: "compressed",
+          sourcemap: "none"
+        },
+        files: {
+          "public/stylesheets/library.css" : "src/public/sass/library.scss"
+        }
+      }
+    },
     ts: {
       build: {
         src: ["./src/**/*.ts",  "!node_modules/**/*.ts"],
@@ -28,6 +39,10 @@ module.exports = function(grunt) {
       ts: {
         files: "./src/**/*.ts",
         tasks: ["ts", "tslint"]
+      },
+      styles: {
+        files: "src/public/sass/*.scss",
+        tasks: ["sass"]
       }
     }
   });
@@ -35,6 +50,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-ts");
   grunt.loadNpmTasks("grunt-tslint");
-
+  grunt.loadNpmTasks("grunt-contrib-sass");
   grunt.registerTask("default", ["watch"]);
 };
