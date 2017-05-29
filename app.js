@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// import required files
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -14,12 +15,17 @@ app.use(logger("dev"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// Routes
 app.use("/", baseRoutes);
+// catch 404 and forward to error handler
 app.use(function (req, res, next) {
     const err = new Error("Not Found");
     err.status = 404;
     next(err);
 });
+// error handlers
+// development error handler
+// will print stacktrace
 if (app.get("env") === "development") {
     app.locals.pretty = true;
     app.use(function (err, req, res, next) {
@@ -30,6 +36,8 @@ if (app.get("env") === "development") {
         });
     });
 }
+// production error handler
+// no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     app.locals.pretty = true;
     res.status(err.status || 500);
