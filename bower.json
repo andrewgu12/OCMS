@@ -1,0 +1,20 @@
+{
+  "name": "cms",
+  "description": "OCMS: Organization Content Manager System: A CMS I built meant to help manage organization's sites. I found myself repeatedly building very similar CMS's across the organizations I've built sites for so I decided to abstract most of it into a single project. This will be a constant work in progress. It's also an excuse for me to try Typescript, so bear with me - the TS might be kind of sloppy, but I'll work on it.",
+  "main": "index.js",
+  "authors": [
+    "Andrew Gu <andrew@mingbogu.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/andrewgu12/OCMS",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6"
+  }
+}

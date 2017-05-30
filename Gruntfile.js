@@ -35,10 +35,21 @@ module.exports = function(grunt) {
         src: ["./src/**/*.ts", "!node_modules/**/*.ts", "!**/src/*.baseDir.ts"]
       }
     },
+    uglify: {
+      options: {
+        mangle: false,
+        compress: true
+      },
+      my_target: {
+        files: {
+          "public/javascript/app.min.js" : ["bower_components/jquery/dist/jquery.js", "public/javascript/library.js"]
+        }
+      }
+    },
     watch: {
       ts: {
         files: "./src/**/*.ts",
-        tasks: ["ts", "tslint"]
+        tasks: ["ts", "tslint", "uglify"]
       },
       styles: {
         files: "src/public/sass/*.scss",
@@ -51,5 +62,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-ts");
   grunt.loadNpmTasks("grunt-tslint");
   grunt.loadNpmTasks("grunt-contrib-sass");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.registerTask("default", ["watch"]);
 };

@@ -1,0 +1,10 @@
+// Purpose: Import all other files and serve as central file to compile to css
+
+
+// import external libraries
+@import "../../../bower_components/bootstrap/scss/bootstrap";
+
+
+// import custom libraries
+@import "variables";
+@import "framework";
