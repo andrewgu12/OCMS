@@ -1,3 +1,14 @@
 // Purpose: Contains variables I'm overriding or utilizing in my styles
 
-$background-color: #f4f4f4;
+$bg-gray: #f4f4f4;
+
+$body-bg: $bg-gray;
+$font-family-sans-serif: 'Open Sans';
+
+$dropshadow-color: rgba(210,210,210,0.46);
+
+// media queries breakpoints (.1 less)
+$sm: 34em;
+$md: 48em;
+$lg: 62em;
+$xl: 75em;

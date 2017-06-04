@@ -6,5 +6,66 @@ html, body {
 	width: 100%;
 	height: 100%;
 	font-size: 16px;
-  background: $background-color;
+}
+
+// topbar styles
+nav#cms-topbar {
+	background-color: $bg-gray;
+
+	@media (min-width: $sm) {
+		a.navbar-brand {
+			font-size: 1rem;
+		}
+		a.nav-link {
+			font-size: 0.75rem;
+		}
+	}
+	@media (min-width: $md) {
+		a.navbar-brand {
+			font-size: 2rem;
+		}
+		a.nav-link {
+			font-size: 0.75rem;
+		}
+	}
+	@media (min-width: $lg) {
+		a.navbar-brand {
+			font-size: 3rem;
+		}
+		a.nav-link {
+			font-size: 1.25rem;
+		}
+	} 
+}
+
+div#inner-container {
+	margin-top: 1rem;
+	background-color: $white;
+	box-shadow: 1px 1px 5px $dropshadow-color;
+	padding: 4rem 0 4rem 0;
+}
+
+footer {
+	text-align: center;
+	margin-top: 0.5rem;
+	p {
+		color: $gray-light;
+	}
+}
+
+// miscellaneous styles
+button {
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+input.form-control {
+	font-family: $font-family-sans-serif;
+	&::placeholder {
+		color: $gray-lighter;
+	}
+	&::-webkit-input-placeholder {
+		color: $gray-lighter;
+	}
 }

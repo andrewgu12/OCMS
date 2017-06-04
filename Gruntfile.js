@@ -42,7 +42,8 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          "public/javascript/app.min.js" : ["bower_components/jquery/dist/jquery.js", "public/javascript/library.js"]
+          "public/javascript/bootstrap.js": ["bower_components/bootstrap/js/dist/alert.js", "bower_components/bootstrap/js/dist/button.js", "bower_components/bootstrap/js/dist/collapse.js", "bower_components/bootstrap/js/dist/dropdown.js", "bower_components/bootstrap/js/dist/modal.js", "bower_components/bootstrap/js/dist/tab.js", "bower_components/bootstrap/js/dist/util.js"],
+          "public/javascript/app.min.js" : ["bower_components/jquery/dist/jquery.js", "public/javascript/bootstrap.js","public/javascript/library.js"]
         }
       }
     },

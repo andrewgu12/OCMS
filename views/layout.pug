@@ -9,6 +9,9 @@ html(lang="en")
     link(rel="stylesheet", href="/stylesheets/library.css")
   body
     div.container
+      include ./menu.pug
       div#inner-container
         block content
+      footer
+        p  &copy; Andrew Gu 2017
     script(src="/javascript/app.min.js")
