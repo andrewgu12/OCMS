@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     },
     watch: {
       ts: {
-        files: "./src/**/*.ts",
+        files: "src/**/*.ts",
         tasks: ["ts", "tslint", "uglify"]
       },
       styles: {

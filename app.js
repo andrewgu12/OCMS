@@ -6,7 +6,12 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const mongoose = require("mongoose");
+// routes
 const baseRoutes = require("./routes/index");
+// database connection
+const configVals = require("./config/connection");
+mongoose.connect(configVals.connectionURL);
 const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");

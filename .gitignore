@@ -2,3 +2,5 @@ node_modules/
 .DS_STORE
 .sass-cache/
 .baseDir.js
+
+config/keys.json

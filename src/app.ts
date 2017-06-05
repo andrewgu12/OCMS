@@ -5,8 +5,14 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as favicon from "serve-favicon";
 import * as logger from "morgan";
+import * as mongoose from "mongoose";
 
+// routes
 const baseRoutes = require("./routes/index");
+
+// database connection
+import * as configVals from "./config/connection";
+mongoose.connect(configVals.connectionURL);
 
 const app = express();
 
@@ -23,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/", baseRoutes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
   const err  = new Error("Not Found");
   err.status = 404;
   next(err);
@@ -35,7 +41,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get("env") === "development") {
   app.locals.pretty = true;
-  app.use(function(err, req, res, next) {
+  app.use(function(err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
     res.status(err.status || 500);
     res.render("error", {
       message: err.message,
@@ -46,7 +52,7 @@ if (app.get("env") === "development") {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function(err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
   app.locals.pretty = true;
   res.status(err.status || 500);
   res.render("error", {
