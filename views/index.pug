@@ -1,14 +1,14 @@
 extends layout
 
 block content
-  form(id="login-form")
+  form(id="login-form", method="post", action="/login")
     div(class="form-group row justify-content-center")
       label(for="username",class="col-md-2 hidden-sm-down col-form-label") Username
       div(class="col-md-4 col-6")
-        input(class="form-control",type="text",id="username",placeholder="barney@stinson.com")
+        input(class="form-control",type="text",id="username",name="username",placeholder="barney@stinson.com")
     div(class="form-group row justify-content-center")
       label(for="password",class="col-md-2 hidden-sm-down col-form-label") Password
       div(class="col-md-4 col-6")
-        input(class="form-control", type="password", id="password",placeholder="*********")
+        input(class="form-control", type="password", id="password",name="password",placeholder="*********")
     div(class="form-group row justify-content-center")
       button(type="submit",class="btn btn-primary offset-md-5 offset-3 offset-sm-4") Login

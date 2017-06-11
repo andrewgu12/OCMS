@@ -1,29 +1,45 @@
 // import required files
 import * as express from "express";
+import * as expressSession from "express-session";
 import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as favicon from "serve-favicon";
 import * as logger from "morgan";
+import * as passport from "passport";
+import * as helmet from "helmet";
 import * as mongoose from "mongoose";
+import * as connectMongo from "connect-mongo";
+import * as configVals from "./config/connection";
 
+const flash = require("connect-flash");
 // routes
 const baseRoutes = require("./routes/index");
 
 // database connection
-import * as configVals from "./config/connection";
 mongoose.connect(configVals.connectionURL);
+// session storage
+const MongoStore = connectMongo(expressSession);
 
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(helmet());
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(expressSession({
+  secret: configVals.sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // Routes
 app.use("/", baseRoutes);
