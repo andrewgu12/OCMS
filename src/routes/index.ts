@@ -2,21 +2,22 @@
 import * as express from "express";
 import * as passport from "../config/passport";
 import * as LibraryFunctions from "../config/library";
-import { IUserModel } from "../types/IUser";
+import { IUser } from "../types/IUser";
+import * as User from "../models/User";
 const router = express.Router();
 
 router.get("/", (req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.render("index", { title: "[Your Logo Here] CMS" });
 });
 
-router.get("/login-success", LibraryFunctions.checkAuthentication, (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.get("/success", LibraryFunctions.checkAuthentication, (req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.render("success", { title: "Succcess!" });
 });
 
 
 // User authentication and creation
 router.post("/login", (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  passport.authenticate("login", (err: Error, user: IUserModel, info: Object) => {
+  passport.authenticate("login", (err: Error, user: IUser, info: Object) => {
     if (err) {
       res.status(401);
       res.send("Something went wrong. Hold on.");
@@ -25,12 +26,27 @@ router.post("/login", (req: express.Request, res: express.Response, next: expres
       res.send("Invalid username/password. Please try again.");
     } else if (user) {
       res.status(200);
-      res.redirect("/login-success");
+      req.login(user, (err) => {
+        if (err) 
+          return next(err);
+        res.redirect("/success");
+      });    
     }
   })(req, res, next);
 });
 
 router.post("/register", (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const user = new User({username: req.body.username});
+  user.setPassword(req.body.password);
+  user.save((err: Error, user: IUser) => {
+    if (err) {
+      res.status(401);
+      res.send("Something went wrong. Please try again.");
+    } else {
+      res.status(200);
+      res.send("Success the user has been created!");
+    }
+  });
 
 });
 

@@ -1,10 +1,13 @@
-// Interface for User Schema
+// Interface for User Schemas. Separate out the model interface from the user interface. 
 import { Document } from "mongoose";
 
-export interface IUserModel extends Document {
+export interface IUser {
   username: string;
   hash: string;
   salt: string;
-  setPassword(): void;
-  validPassword( password: string ): boolean;
+}
+
+export interface IUserModel extends IUser, Document {
+  setPassword(pass: string): void;
+  validPassword(pass: string): boolean;
 }

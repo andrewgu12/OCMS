@@ -13,6 +13,7 @@ import * as connectMongo from "connect-mongo";
 import * as configVals from "./config/connection";
 
 const flash = require("connect-flash");
+
 // routes
 const baseRoutes = require("./routes/index");
 
@@ -33,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressSession({
   secret: configVals.sessionSecret,
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));

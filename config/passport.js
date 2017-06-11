@@ -25,7 +25,7 @@ passport.serializeUser((user, done) => {
     done(undefined, user.username);
 });
 passport.deserializeUser((username, done) => {
-    User.findById(username, (err, user) => {
+    User.find({ "username": username }, (err, user) => {
         done(err, user);
     });
 });

@@ -31,7 +31,7 @@ passport.serializeUser((user: IUserModel, done: Function) => {
 });
 
 passport.deserializeUser((username: string, done: Function) => {
-  User.findById(username, (err: any, user: IUserModel) => {
+  User.find({"username": username}, (err: any, user: IUserModel) => {
     done(err, user);
   });
 });

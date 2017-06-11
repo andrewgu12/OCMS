@@ -11,11 +11,12 @@ const userSchema = new mongoose.Schema({
     hash: { type: String, default: "" },
     salt: { type: String, default: "" }
 });
-userSchema.methods.setPassword = (pass) => {
+// Don't use fat arrow syntax here!
+userSchema.methods.setPassword = function (pass) {
     this.salt = crypto.randomBytes(64).toString("hex");
     this.hash = crypto.pbkdf2Sync(pass, this.salt, 100000, 512, "sha512").toString("hex");
 };
-userSchema.methods.validPassword = (pass) => {
+userSchema.methods.validPassword = function (pass) {
     const hash = crypto.pbkdf2Sync(pass, this.salt, 100000, 512, "sha512").toString("hex");
     return this.hash === hash;
 };
