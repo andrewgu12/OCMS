@@ -8,31 +8,42 @@ const chaiHttp = require("chai-http");
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe("Login and Logout", () => {
+describe("User Tests", () => {
   describe("Register and delete user", () => {
-    it("should create a new user", (done) => {
+    it("should create a new user", (done: Function) => {
       chai.request(server)
-          .post("/register")
-          .send({username: "user1", password: "pass"})
-          .end((err: any, res: Response) => {
-            // console.log(res);
-            res.should.have.status(200);
-            User.find({username: "user1"}, (err: any, user: IUser) => {
-              user.username.should.equal("user1");
-            });
-            done();
+        .post("/register")
+        .send({ username: "user1", password: "pass" })
+        .end((err: any, res: Response) => {
+          res.should.have.status(200);
+          User.find({ username: "user1" }, (err: any, user: IUser) => {
+            user.username.should.equal("user1");
           });
+          done();
+        });
+    });
+    it("should delete selected user", (done: Function) => {
+      chai.request(server)
+      .post("/delete")
+      .send({ username: "user1" })
+      .end((err: any, res: Response) => {
+        res.should.have.status(200);
+        User.findOne({ username: "user1" }, (err: any, user: IUser) => {
+          should.not.exist(user);
+        });
+        done();
+      });
     });
   });
   describe("Login", () => {
-    it("should fail login", (done) => {
+    it("should fail login", (done: Function) => {
       chai.request(server)
-          .post("/login")
-          .send({username: "test", password: "pass"})
-          .end((err: any, res: Response) => {
-            res.should.have.status(401);
-            done();
-          });
+        .post("/login")
+        .send({ username: "test", password: "pass" })
+        .end((err: any, res: Response) => {
+          res.should.have.status(401);
+          done();
+        });
     });
   });
 });

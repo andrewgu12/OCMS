@@ -46,4 +46,17 @@ router.post("/register", (req, res, next) => {
         }
     });
 });
+router.post("/delete", (req, res, next) => {
+    const username = req.body.username;
+    User.remove({ "username": username }, (err) => {
+        if (err) {
+            res.status(401);
+            res.send("Something went wrong. Could not delete user.");
+        }
+        else {
+            res.status(200);
+            res.send("Success the user has been deleted!");
+        }
+    });
+});
 module.exports = router;
