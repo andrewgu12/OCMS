@@ -14,10 +14,10 @@ describe("User Tests", () => {
                 .send({ username: "user1", password: "pass" })
                 .end((err, res) => {
                 res.should.have.status(200);
-                User.find({ username: "user1" }, (err, user) => {
+                User.findOne({ username: "user1" }, (err, user) => {
                     user.username.should.equal("user1");
+                    done();
                 });
-                done();
             });
         });
         it("should delete selected user", (done) => {
@@ -28,12 +28,24 @@ describe("User Tests", () => {
                 res.should.have.status(200);
                 User.findOne({ username: "user1" }, (err, user) => {
                     should.not.exist(user);
+                    done();
                 });
-                done();
             });
         });
     });
     describe("Login", () => {
+        // Create an user to login
+        before(() => {
+            chai.request(server)
+                .post("/register")
+                .send({ username: "user1", password: "pass" })
+                .end((err, res) => {
+                res.should.have.status(200);
+                User.findOne({ username: "user1" }, (err, user) => {
+                    user.username.should.equal("user1");
+                });
+            });
+        });
         it("should fail login", (done) => {
             chai.request(server)
                 .post("/login")
@@ -41,6 +53,23 @@ describe("User Tests", () => {
                 .end((err, res) => {
                 res.should.have.status(401);
                 done();
+            });
+        });
+        it("should successfully login", (done) => {
+            chai.request(server)
+                .post("/login")
+                .send({ username: "user1", password: "pass" })
+                .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+        });
+        after(() => {
+            chai.request(server)
+                .post("/delete")
+                .send({ username: "user1" })
+                .end((err, res) => {
+                res.should.have.status(200);
             });
         });
     });

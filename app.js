@@ -16,6 +16,7 @@ const flash = require("connect-flash");
 // routes
 const baseRoutes = require("./routes/index");
 // database connection
+mongoose.Promise = global.Promise;
 mongoose.connect(configVals.connectionURL);
 // session storage
 const MongoStore = connectMongo(expressSession);
