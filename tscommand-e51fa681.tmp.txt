@@ -1,1 +1,0 @@
-src/app.ts src/config/connection.ts src/config/library.ts src/config/passport.ts src/models/User.ts src/public/javascript/library.ts src/routes/index.ts src/test/user.ts src/types/error.d.ts src/types/IUser.ts src/.baseDir.ts --rootDir src --target ES6 --module commonjs --outDir .
