@@ -38,11 +38,11 @@ describe("User Tests", () => {
         before(() => {
             chai.request(server)
                 .post("/register")
-                .send({ username: "user1", password: "pass" })
+                .send({ username: "user2", password: "pass" })
                 .end((err, res) => {
                 res.should.have.status(200);
-                User.findOne({ username: "user1" }, (err, user) => {
-                    user.username.should.equal("user1");
+                User.findOne({ username: "user2" }, (err, user) => {
+                    user.username.should.equal("user2");
                 });
             });
         });
@@ -58,7 +58,7 @@ describe("User Tests", () => {
         it("should successfully login", (done) => {
             chai.request(server)
                 .post("/login")
-                .send({ username: "user1", password: "pass" })
+                .send({ username: "user2", password: "pass" })
                 .end((err, res) => {
                 res.should.have.status(200);
                 done();
@@ -67,7 +67,7 @@ describe("User Tests", () => {
         after(() => {
             chai.request(server)
                 .post("/delete")
-                .send({ username: "user1" })
+                .send({ username: "user2" })
                 .end((err, res) => {
                 res.should.have.status(200);
             });
