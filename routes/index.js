@@ -1,61 +1,64 @@
 "use strict";
 // import express library
-const express = require("express");
-const passport = require("../config/passport");
-const LibraryFunctions = require("../config/library");
-const User = require("../models/User");
-const router = express.Router();
-router.get("/", (req, res, next) => {
+var express = require("express");
+var passport = require("../config/passport");
+var LibraryFunctions = require("../config/library");
+var User = require("../models/User");
+var router = express.Router();
+router.get("/", function (req, res, next) {
     res.render("index", { title: "[Your Logo Here] CMS" });
 });
-router.get("/success", LibraryFunctions.checkAuthentication, (req, res, next) => {
+router.get("/success", LibraryFunctions.checkAuthentication, function (req, res, next) {
     res.render("success", { title: "Succcess!" });
 });
-// User authentication and creation
-router.post("/login", (req, res, next) => {
-    passport.authenticate("login", (err, user, info) => {
+// User authentication
+router.post("/login", function (req, res, next) {
+    console.log(req.body);
+    passport.authenticate("login", function (err, user, info) {
         if (err) {
             res.status(401);
-            res.send("Something went wrong. Hold on.");
+            res.json({ status: "Something went wrong. Please try again." });
         }
         else if (!user) {
             res.status(401);
-            res.send("Invalid username/password. Please try again.");
+            res.json({ status: "Invalid username/password. Please try again." });
         }
         else if (user) {
             res.status(200);
-            req.login(user, (err) => {
+            req.login(user, function (err) {
                 if (err)
                     return next(err);
-                res.redirect("/success");
+                res.json({ status: "Success", redirect: "/success" });
             });
         }
     })(req, res, next);
 });
-router.post("/register", (req, res, next) => {
-    const user = new User({ username: req.body.username });
+// User creation
+router.post("/register", function (req, res, next) {
+    var user = new User({ username: req.body.username });
     user.setPassword(req.body.password);
-    user.save((err, user) => {
+    user.save(function (err, user) {
         if (err) {
             res.status(401);
-            res.send("Something went wrong. Please try again.");
+            res.json({ status: "Something went wrong. Please try again." });
         }
         else {
             res.status(200);
-            res.send("Success the user has been created!");
+            res.json({ status: "Success the user has been created!" });
         }
     });
 });
-router.post("/delete", (req, res, next) => {
-    const username = req.body.username;
-    User.remove({ "username": username }, (err) => {
+// User deletion
+router.post("/delete", function (req, res, next) {
+    var username = req.body.username;
+    User.remove({ "username": username }, function (err) {
         if (err) {
             res.status(401);
-            res.send("Something went wrong. Could not delete user.");
+            res.json({ status: "Something went wrong. Could not delete user." });
         }
         else {
             res.status(200);
-            res.send("Success the user has been deleted!");
+            res.json({ status: "Success the user has been deleted!" });
         }
     });
 });

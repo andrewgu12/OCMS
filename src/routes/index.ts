@@ -15,53 +15,54 @@ router.get("/success", LibraryFunctions.checkAuthentication, (req: express.Reque
 });
 
 
-// User authentication and creation
+// User authentication
 router.post("/login", (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log(req.body);
   passport.authenticate("login", (err: Error, user: IUser, info: Object) => {
     if (err) {
       res.status(401);
-      res.send("Something went wrong. Hold on.");
+      res.json({status: "Something went wrong. Please try again."});
     } else if (!user) {
       res.status(401);
-      res.send("Invalid username/password. Please try again.");
+      res.json({status: "Invalid username/password. Please try again."});
     } else if (user) {
       res.status(200);
       req.login(user, (err) => {
         if (err) 
           return next(err);
-        res.redirect("/success");
+        res.json({status: "Success", redirect: "/success"});
       });    
     }
   })(req, res, next);
 });
 
+// User creation
 router.post("/register", (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const user = new User({username: req.body.username});
   user.setPassword(req.body.password);
   user.save((err: Error, user: IUser) => {
     if (err) {
       res.status(401);
-      res.send("Something went wrong. Please try again.");
+      res.json({status: "Something went wrong. Please try again."});
     } else {
       res.status(200);
-      res.send("Success the user has been created!");
+      res.json({status: "Success the user has been created!"});
     }
   });
 });
 
+// User deletion
 router.post("/delete", (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const username = req.body.username;
   User.remove({"username": username}, (err) => {
     if (err) {
       res.status(401);
-      res.send("Something went wrong. Could not delete user.");
+      res.json({status: "Something went wrong. Could not delete user."});
     } else {
       res.status(200);
-      res.send("Success the user has been deleted!");
+      res.json({status: "Success the user has been deleted!"});
     }
   });
 });
-
-
 
 export = router;

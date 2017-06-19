@@ -1,74 +1,74 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai = require("chai");
-const server = require("../app");
-const User = require("../models/User");
-const chaiHttp = require("chai-http");
-const should = chai.should();
+var chai = require("chai");
+var server = require("../app");
+var User = require("../models/User");
+var chaiHttp = require("chai-http");
+var should = chai.should();
 chai.use(chaiHttp);
-describe("User Tests", () => {
-    describe("Register and delete user", () => {
-        it("should create a new user", (done) => {
+describe("User Tests", function () {
+    describe("Register and delete user", function () {
+        it("should create a new user", function (done) {
             chai.request(server)
                 .post("/register")
                 .send({ username: "user1", password: "pass" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(200);
-                User.findOne({ username: "user1" }, (err, user) => {
+                User.findOne({ username: "user1" }, function (err, user) {
                     user.username.should.equal("user1");
                     done();
                 });
             });
         });
-        it("should delete selected user", (done) => {
+        it("should delete selected user", function (done) {
             chai.request(server)
                 .post("/delete")
                 .send({ username: "user1" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(200);
-                User.findOne({ username: "user1" }, (err, user) => {
+                User.findOne({ username: "user1" }, function (err, user) {
                     should.not.exist(user);
                     done();
                 });
             });
         });
     });
-    describe("Login", () => {
+    describe("Login", function () {
         // Create an user to login
-        before(() => {
+        before(function () {
             chai.request(server)
                 .post("/register")
                 .send({ username: "user2", password: "pass" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(200);
-                User.findOne({ username: "user2" }, (err, user) => {
+                User.findOne({ username: "user2" }, function (err, user) {
                     user.username.should.equal("user2");
                 });
             });
         });
-        it("should fail login", (done) => {
+        it("should fail login", function (done) {
             chai.request(server)
                 .post("/login")
                 .send({ username: "test", password: "pass" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(401);
                 done();
             });
         });
-        it("should successfully login", (done) => {
+        it("should successfully login", function (done) {
             chai.request(server)
                 .post("/login")
                 .send({ username: "user2", password: "pass" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(200);
                 done();
             });
         });
-        after(() => {
+        after(function () {
             chai.request(server)
                 .post("/delete")
                 .send({ username: "user2" })
-                .end((err, res) => {
+                .end(function (err, res) {
                 res.should.have.status(200);
             });
         });

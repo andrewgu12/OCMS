@@ -1,11 +1,11 @@
 "use strict";
-const passport = require("passport");
-const localPassport = require("passport-local");
-const User = require("../models/User");
-const LocalStrategy = localPassport.Strategy;
+var passport = require("passport");
+var localPassport = require("passport-local");
+var User = require("../models/User");
+var LocalStrategy = localPassport.Strategy;
 // console.log(LocalStrategy);
-passport.use("login", new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+passport.use("login", new LocalStrategy(function (username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
         // general error
         if (err) {
             return done(err);
@@ -21,11 +21,11 @@ passport.use("login", new LocalStrategy((username, password, done) => {
         return done(undefined, user);
     });
 }));
-passport.serializeUser((user, done) => {
+passport.serializeUser(function (user, done) {
     done(undefined, user.username);
 });
-passport.deserializeUser((username, done) => {
-    User.find({ "username": username }, (err, user) => {
+passport.deserializeUser(function (username, done) {
+    User.find({ "username": username }, function (err, user) {
         done(err, user);
     });
 });

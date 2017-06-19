@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // import required files
-const express = require("express");
-const expressSession = require("express-session");
-const path = require("path");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const passport = require("passport");
-const helmet = require("helmet");
-const mongoose = require("mongoose");
-const connectMongo = require("connect-mongo");
-const configVals = require("./config/connection");
-const flash = require("connect-flash");
+var express = require("express");
+var expressSession = require("express-session");
+var path = require("path");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var passport = require("passport");
+var helmet = require("helmet");
+var mongoose = require("mongoose");
+var connectMongo = require("connect-mongo");
+var configVals = require("./config/connection");
+var flash = require("connect-flash");
 // routes
-const baseRoutes = require("./routes/index");
+var baseRoutes = require("./routes/index");
 // database connection
 mongoose.Promise = global.Promise;
 mongoose.connect(configVals.connectionURL);
 // session storage
-const MongoStore = connectMongo(expressSession);
-const app = express();
+var MongoStore = connectMongo(expressSession);
+var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
@@ -42,7 +42,7 @@ app.use(flash());
 app.use("/", baseRoutes);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    const err = new Error("Not Found");
+    var err = new Error("Not Found");
     err.status = 404;
     next(err);
 });

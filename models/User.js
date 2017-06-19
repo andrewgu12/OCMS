@@ -1,8 +1,8 @@
 "use strict";
 // Schema for users who have access to OCMS
-const mongoose = require("mongoose");
-const crypto = require("crypto");
-const userSchema = new mongoose.Schema({
+var mongoose = require("mongoose");
+var crypto = require("crypto");
+var userSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
@@ -17,8 +17,8 @@ userSchema.methods.setPassword = function (pass) {
     this.hash = crypto.pbkdf2Sync(pass, this.salt, 100000, 512, "sha512").toString("hex");
 };
 userSchema.methods.validPassword = function (pass) {
-    const hash = crypto.pbkdf2Sync(pass, this.salt, 100000, 512, "sha512").toString("hex");
+    var hash = crypto.pbkdf2Sync(pass, this.salt, 100000, 512, "sha512").toString("hex");
     return this.hash === hash;
 };
-const User = mongoose.model("User", userSchema);
+var User = mongoose.model("User", userSchema);
 module.exports = User;
