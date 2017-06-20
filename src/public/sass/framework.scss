@@ -69,3 +69,13 @@ input.form-control {
 		color: $gray-lighter;
 	}
 }
+
+// Error situations. Highlight the textbox and display error message
+input.danger {
+	border-color: $red;
+}
+p.error-message {
+	text-align: center;
+	color: $red;
+	display: none;
+}

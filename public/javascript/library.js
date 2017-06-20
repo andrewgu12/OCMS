@@ -13,8 +13,9 @@ $(function () {
             var redirectURL = window.location.protocol + "//" + window.location.host + data.redirect;
             $(location).attr("href", redirectURL);
         }).fail(function (error) {
-            console.log("error");
-            console.log(error);
+            $("form#login-form input#username").addClass("danger");
+            $("form#login-form input#password").addClass("danger");
+            $("form#login-form p.error-message").show();
         });
     });
 });

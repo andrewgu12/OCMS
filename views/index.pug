@@ -2,10 +2,11 @@ extends layout
 
 block content
   form(id="login-form", method="post")
+    p(class="error-message") Username/password is wrong. Please try again.
     div(class="form-group row justify-content-center")
       label(for="username",class="col-md-2 hidden-sm-down col-form-label") Username
       div(class="col-md-4 col-6")
-        input(class="form-control",type="text",id="username",name="username",placeholder="barney@stinson.com")
+        input(class="form-control",type="text",id="username",name="username",placeholder="barney@stinson.com")      
     div(class="form-group row justify-content-center")
       label(for="password",class="col-md-2 hidden-sm-down col-form-label") Password
       div(class="col-md-4 col-6")
