@@ -13,7 +13,6 @@ router.get("/success", LibraryFunctions.checkAuthentication, function (req, res,
 });
 // User authentication
 router.post("/login", function (req, res, next) {
-    console.log(req.body);
     passport.authenticate("login", function (err, user, info) {
         if (err) {
             res.status(401);
@@ -32,6 +31,11 @@ router.post("/login", function (req, res, next) {
             });
         }
     })(req, res, next);
+});
+// User logout
+router.get("/logout", function (req, res, next) {
+    req.logout();
+    res.redirect("/");
 });
 // User creation
 router.post("/register", function (req, res, next) {

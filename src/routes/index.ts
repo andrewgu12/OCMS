@@ -17,7 +17,6 @@ router.get("/success", LibraryFunctions.checkAuthentication, (req: express.Reque
 
 // User authentication
 router.post("/login", (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log(req.body);
   passport.authenticate("login", (err: Error, user: IUser, info: Object) => {
     if (err) {
       res.status(401);
@@ -34,6 +33,12 @@ router.post("/login", (req: express.Request, res: express.Response, next: expres
       });    
     }
   })(req, res, next);
+});
+
+// User logout
+router.get("/logout", (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  req.logout();
+  res.redirect("/");
 });
 
 // User creation
@@ -64,5 +69,6 @@ router.post("/delete", (req: express.Request, res: express.Response, next: expre
     }
   });
 });
+
 
 export = router;
